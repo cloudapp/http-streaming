@@ -237,6 +237,9 @@ const handleSegmentResponse = ({
 
   // stop processing if received empty content
   if (response.byteLength === 0) {
+    const event = new Event('segment-error');
+    window.dispatchEvent(event)
+
     return finishProcessingFn({
       status: request.status,
       message: 'Empty HLS segment content at URL: ' + request.uri,
@@ -673,9 +676,9 @@ const waitForCompletion = ({
     }
 
     if (error) {
-      didError = true;
+      //didError = true;
       // If there are errors, we have to abort any outstanding requests
-      abortAll(activeXhrs);
+      //abortAll(activeXhrs);
 
       // Even though the requests above are aborted, and in theory we could wait until we
       // handle the aborted events from those requests, there are some cases where we may
